@@ -10,10 +10,6 @@ const app = express();
 // CONFIG AND ENVIRONMENT LOADING FROM .env FILE
 const config = require("./config");
 
-if (!config) {
-  throw new Error(`❌ Invalid ${environment} environment`);
-}
-
 // MIDDLEWARES
 app.use(cors());
 app.use(morgan("combined"));
