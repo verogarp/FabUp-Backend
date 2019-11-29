@@ -8,9 +8,8 @@ const jwt = require("jsonwebtoken");
 const app = express();
 
 // CONFIG AND ENVIRONMENT LOADING FROM .env FILE
-let config = require("./.env");
-const environment = process.env.NODE_ENV;
-config = config[environment];
+const config = require("./config");
+
 if (!config) {
   throw new Error(`❌ Invalid ${environment} environment`);
 }
