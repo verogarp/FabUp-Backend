@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const adSchema = new mongoose.Schema({
-  Title: {
+  title: {
     type: String,
     required: [true, "Title is required"]
   },
@@ -10,15 +10,11 @@ const adSchema = new mongoose.Schema({
     required: true
   },
   imgUrl: {
-    Type: Array,
+    Type: [String],
     required: true
   },
   price: {
     type: Number,
-    required: true
-  },
-  location: {
-    type: Geo,
     required: true
   },
   category: {
@@ -26,20 +22,22 @@ const adSchema = new mongoose.Schema({
     ref: "category",
     required: true
   },
-  comments: {
-    type: Schema.Types.ObjectId,
-    ref: "comment"
-  },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "comment"
+    }
+  ],
   createdAt: {
-    type: Number,
+    type: Date,
     default: Date.now() // Get a timestamp :)
   },
   updatedAt: {
-    type: Number,
+    type: Date,
     default: Date.now() // Get a timestamp :)
   }
 });
 
-const adModel = mongoose.model("ad  ", adSchema);
+const adModel = mongoose.model("ad", adSchema);
 
 module.exports = adModel;

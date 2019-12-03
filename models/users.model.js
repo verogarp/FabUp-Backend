@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   birthDate: {
-    type: Number,
+    type: Date,
     required: true
   },
   photo_url: {
@@ -31,23 +31,24 @@ const userSchema = new mongoose.Schema({
   description: {
     type: String
   },
-  interest: {
-    type: Schema.Types.ObjectId,
-    ref: "interest"
-  },
-  location: {
-    type: Geo
-  },
-  favoriteAds: {
-    type: Schema.Types.ObjectId,
-    ref: "ad"
-  },
+  interest: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "interest"
+    }
+  ],
+  favoriteAds: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "ad"
+    }
+  ],
   createdAt: {
-    type: Number,
+    type: Date,
     default: Date.now() // Get a timestamp :)
   },
   updatedAt: {
-    type: Number,
+    type: Date,
     default: Date.now() // Get a timestamp :)
   }
 });

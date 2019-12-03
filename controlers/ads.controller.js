@@ -1,31 +1,31 @@
-const UserModel = require("../models/users.model");
+const AdModel = require("../models/ad.model");
 
 module.exports = {
-  getAllUsers,
-  getUserById,
-  deleteUserById,
-  updateUser
+  getAllAds,
+  getAdById,
+  deleteAdById,
+  updateAd
 };
 
-function getAllUsers(req, res) {
+function getAllAds(req, res) {
   UserModel.find()
     .then(response => res.json(response))
     .catch(err => handdleError(err, res));
 }
 
-function getUserById(req, res) {
+function getAdById(req, res) {
   UserModel.findById(req.params.id)
     .then(response => res.json(response))
     .catch(err => handdleError(err, res));
 }
 
-function deleteUserById(req, res) {
+function deleteAdById(req, res) {
   UserModel.remove({ _id: req.params.id })
     .then(response => res.json(response))
     .catch(err => handdleError(err, res));
 }
 
-function updateUser(req, res) {
+function updateAd(req, res) {
   UserModel.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
