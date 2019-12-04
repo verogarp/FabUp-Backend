@@ -15,25 +15,24 @@ function getAllAds(req, res) {
 }
 
 function getSearchAds(req, res) {
-  let category = req.query.category;
-  let minPrice = req.query.minPrice;
-  let maxPrice = req.query.maxPrice;
+  console.log("search");
+  var ObjectId = require("mongoose").Types.ObjectId;
+  let category = req.query.category && new ObjectId(req.query.category);
+  let orderBy = req.query.orderBy;
+  console.log(category);
+  let minPrice = parseInt(req.query.minPrice) || 0;
+  let maxPrice = parseInt(req.query.maxPrice) || 10000000;
 
   AdModel.find({
-    category: category,
-    price: {
-      $and: [{ price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]
-    }
+    category: category, // FIXME
+    $and: [{ price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]
   })
-    // .sort({ field : criteria})
+    .sort(orderBy || "")
     .limit(req.query.limit ? req.query.limit : 30)
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
-// GET : /ads?category=moda
-// GET : /ads?orderBy=likes&limit=3
-// GET : /ads?orderBy=likes
 // GET : /ads?category=moda&maxPrice=40&minPrice=10
 
 /// GET /ADS/ALASODAD

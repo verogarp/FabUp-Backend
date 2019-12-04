@@ -1,4 +1,4 @@
-process.stdout.write("\033c");
+// process.stdout.write("\033c");
 
 const cors = require("cors");
 const express = require("express");
@@ -31,7 +31,7 @@ const authenticate = (req, res, next) => {
 
 // NONGOOSE
 mongoose.connect(
-  config.mongoURL + config.mongoDBName,
+  config.mongoURL,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   err => {
     if (err) {

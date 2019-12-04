@@ -31,6 +31,9 @@ const adSchema = new mongoose.Schema({
   likes: {
     type: [String]
   },
+  numLikes: {
+    type: Number
+  },
   createdAt: {
     type: Date,
     default: Date.now() // Get a timestamp :)

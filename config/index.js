@@ -7,7 +7,7 @@ if (heroku) {
     port: process.env.port
   };
 } else {
-  config = require("./../.env");
+  config = require("../env");
   const environment = process.env.NODE_ENV;
   config = config[environment];
   if (!config) {

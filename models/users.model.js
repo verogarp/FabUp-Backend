@@ -34,7 +34,8 @@ const userSchema = new mongoose.Schema({
   categories: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "category"
+      ref: "category",
+      required: [true, "Categories is necesary"]
     }
   ],
   favoriteAds: [
