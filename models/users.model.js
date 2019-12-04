@@ -15,15 +15,15 @@ const userSchema = new mongoose.Schema({
         );
       }
     },
-    unique: [true, "This is email is registered"]
+    unique: [true, "This email is registered"]
   },
   password: {
     type: String,
-    required: true
+    required: [true, "Password is necesary"]
   },
   birthDate: {
     type: Date,
-    required: true
+    required: [true, "Birth date is necesary"]
   },
   photo_url: {
     Type: String
@@ -31,15 +31,15 @@ const userSchema = new mongoose.Schema({
   description: {
     type: String
   },
-  interest: [
+  categories: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "interest"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "category"
     }
   ],
   favoriteAds: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "ad"
     }
   ],

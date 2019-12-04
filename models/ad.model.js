@@ -7,27 +7,30 @@ const adSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    required: [true, "Description is required"]
   },
-  imgUrl: {
-    Type: [String],
-    required: true
+  images: {
+    type: [String],
+    required: [true, "Images is required"]
   },
   price: {
     type: Number,
-    required: true
+    required: [true, "Price is required"]
   },
   category: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "category",
-    required: true
+    required: [true, "Category is required"]
   },
   comments: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "comment"
     }
   ],
+  likes: {
+    type: [String]
+  },
   createdAt: {
     type: Date,
     default: Date.now() // Get a timestamp :)

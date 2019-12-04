@@ -1,19 +1,23 @@
 const mongoose = require("mongoose");
 
-const commentsSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({
   comment: {
     type: String,
-    required: true
+    required: [true, "Comment is required"]
   },
   userId: {
-    Type: Object
+    Type: mongoose.Schema.Types.ObjectId,
+    ref: "user"
   },
   createdAt: {
-    type: Number,
-    default: Date.now() // Get a timestamp :)
+    type: Date,
+    // default: Date.now() // Get a timestamp :),
+    default: function() {
+      return Date.now();
+    } // revisar si esta no genera problemas y la de arriba si
   }
 });
 
-const commentsModel = mongoose.model("comment", commentsSchema);
+const commentModel = mongoose.model("comment", commentSchema);
 
-module.exports = commentsModel;
+module.exports = commentModel;

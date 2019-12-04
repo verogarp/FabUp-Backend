@@ -60,9 +60,9 @@ function login(req, res) {
         return res.json({ token: token, ...userData });
       });
     })
-    .catch(err => handdleError(err, res));
+    .catch(err => handleError(err, res));
 }
 
-function handdleError(err, res) {
+function handleError(err, res) {
   return res.status(400).json(err);
 }
