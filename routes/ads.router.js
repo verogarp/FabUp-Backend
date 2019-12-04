@@ -3,11 +3,14 @@ const { authenticated, me } = require("../services/auth.service");
 
 const {
   getAllAds,
+  getSearchAds,
   getAdById,
   deleteAdById,
   updateAd
 } = require("../controlers/ads.controller");
 
+router.get("/", getAllAds);
+router.get("/search", getSearchAds);
 router.get("/:id", getAdById);
 router.delete("/:id", authenticated, me, deleteAdById);
 router.put("/:id", updateAd);

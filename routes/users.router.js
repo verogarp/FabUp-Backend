@@ -2,11 +2,10 @@ const router = require("express").Router();
 const { authenticated, me } = require("../services/auth.service");
 
 const {
-  getAllUsers,
   getUserById,
   deleteUserById,
   updateUser
-} = require("../controlers/users.controller");
+} = require("../controllers/users.controller");
 
 // router.get("/", authenticated, getAllUsers);
 router.get("/:id", getUserById);

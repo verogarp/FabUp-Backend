@@ -2,6 +2,7 @@ const AdModel = require("../models/ad.model");
 
 module.exports = {
   getAllAds,
+  getSearchAds,
   getAdById,
   deleteAdById,
   updateAd
@@ -13,24 +14,27 @@ function getAllAds(req, res) {
     .catch(err => handleError(err, res));
 }
 
+function getSearchAds(req, res) {
+  let category = req.query.category;
+  let minPrice = req.query.minPrice;
+  let maxPrice = req.query.maxPrice;
+
+  AdModel.find({
+    category: category,
+    price: {
+      $and: [{ price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]
+    }
+  })
+    // .sort({ field : criteria})
+    .limit(req.query.limit ? req.query.limit : 30)
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
+
 // GET : /ads?category=moda
 // GET : /ads?orderBy=likes&limit=3
 // GET : /ads?orderBy=likes
 // GET : /ads?category=moda&maxPrice=40&minPrice=10
-// GET : /ads?categories=[moda,belleza] esto podria ser en otro proyecto
-
-// function getAllAds(req, res) {
-//   const category = req.query.category;
-//   const minPrice = req.query.minPrice;
-
-//   AdModel.find({
-//     category: category,
-//     price: { $gte: minPrice }
-//   })
-//     .limit(10)
-//     .then(response => res.json(response))
-//     .catch(err => handleError(err, res));
-// }
 
 /// GET /ADS/ALASODAD
 function getAdById(req, res) {
