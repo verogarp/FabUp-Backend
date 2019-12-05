@@ -14,4 +14,4 @@ if (heroku) {
     throw new Error(`❌ Invalid ${environment} environment`);
   }
 }
-module.exports = config;
+export default config;

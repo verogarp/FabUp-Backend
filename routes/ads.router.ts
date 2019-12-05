@@ -1,14 +1,16 @@
-const router = require("express").Router();
-const { authenticated, me } = require("../services/auth.service");
+import * as express from "express";
+const router = express.Router();
 
-const {
+import { authenticated, me } from "../services/auth.service";
+
+import {
   getAllAds,
   getSearchAds,
   getAdById,
   deleteAdById,
   updateAd,
   getFavoritesAds
-} = require("../controllers/ads.controller");
+} from "../controllers/ads.controller";
 
 router.get("/", getAllAds);
 router.get("/search", getSearchAds);
@@ -30,4 +32,4 @@ router.put("/:id", updateAd);
 // router.get("/search", getByCategoryAndPrice);
 // router.get("/byCreateAt", getByCreationDate);
 
-module.exports = router;
+export default router;

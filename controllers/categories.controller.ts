@@ -1,18 +1,13 @@
-const categories = require("../models/categories.model");
+import categories from "../models/categories.model";
 
-module.exports = {
-  getAllCategories,
-  getCategoryById
-};
-
-function getAllCategories(req, res) {
+export function getAllCategories(req, res) {
   categories
     .find()
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
-function getCategoryById(req, res) {
+export function getCategoryById(req, res) {
   categories
     .findById(req.params.id)
     .then(response => res.json(response))

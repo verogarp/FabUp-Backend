@@ -1,21 +1,21 @@
 // process.stdout.write("\033c");
 
-const cors = require("cors");
-const express = require("express");
-const mongoose = require("mongoose");
-const morgan = require("morgan");
-const jwt = require("jsonwebtoken");
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
+import morgan from "morgan";
+import jwt from "jsonwebtoken";
 const app = express();
 
 // CONFIG AND ENVIRONMENT LOADING FROM .env FILE
-const config = require("./config");
+import config from "./config";
 
 // MIDDLEWARES
 app.use(cors());
 app.use(morgan("combined"));
 app.use(express.json());
 
-const UserModel = require("./models/users.model");
+import UserModel from "./models/users.model";
 
 const authenticate = (req, res, next) => {
   jwt.verify(req.headers.token, "secret", (err, token) => {
@@ -35,14 +35,14 @@ mongoose.connect(
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   err => {
     if (err) {
-      throw new Error(err);
+      throw new Error(err.toString());
     }
     console.info("💾  Mongoose is connected");
   }
 );
 
 // ROUTING
-const apiRouter = require("./routes");
+import apiRouter from "./routes";
 app.use("/api", apiRouter);
 
 app.get("/api/whoami", authenticate, (req, res) => {

@@ -1,13 +1,8 @@
-const UserModel = require("../models/users.model");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import UserModel from "../models/users.model";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-module.exports = {
-  signup,
-  login
-};
-
-function signup(req, res) {
+export function signup(req, res) {
   const hashedPwd = bcrypt.hashSync(req.body.user_password, 10);
   const userBody = {
     name: req.body.user_name,
@@ -35,9 +30,9 @@ function signup(req, res) {
     });
 }
 
-function login(req, res) {
+export function login(req, res) {
   UserModel.findOne({ email: req.body.user_email })
-    .then(user => {
+    .then((user: any) => {
       if (!user) {
         return res.json({ error: "wrong email" });
       }

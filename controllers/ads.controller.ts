@@ -1,20 +1,12 @@
-const AdModel = require("../models/ad.model");
+import AdModel from "../models/ad.model";
 
-module.exports = {
-  getAllAds,
-  getSearchAds,
-  getAdById,
-  deleteAdById,
-  updateAd
-};
-
-function getAllAds(req, res) {
+export function getAllAds(req, res) {
   AdModel.find()
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
-function getSearchAds(req, res) {
+export function getSearchAds(req, res) {
   var ObjectId = require("mongoose").Types.ObjectId;
   let categoryId = req.query.category && new ObjectId(req.query.category);
   let orderBy = req.query.orderBy;
@@ -33,7 +25,7 @@ function getSearchAds(req, res) {
     .catch(err => handleError(err, res));
 }
 
-function getFavoritesAds(req, res) {
+export function getFavoritesAds(req, res) {
   AdModel.find()
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
@@ -42,19 +34,19 @@ function getFavoritesAds(req, res) {
 // GET : /ads?category=moda&maxPrice=40&minPrice=10
 
 /// GET /ADS/ALASODAD
-function getAdById(req, res) {
+export function getAdById(req, res) {
   AdModel.findById(req.params.id)
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
-function deleteAdById(req, res) {
+export function deleteAdById(req, res) {
   AdModel.remove({ _id: req.params.id })
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
-function updateAd(req, res) {
+export function updateAd(req, res) {
   AdModel.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const adSchema = new mongoose.Schema({
   title: {
@@ -48,6 +48,4 @@ const adSchema = new mongoose.Schema({
   }
 });
 
-const adModel = mongoose.model("ad", adSchema);
-
-module.exports = adModel;
+export default mongoose.model("ad", adSchema);

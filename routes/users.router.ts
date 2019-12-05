@@ -1,16 +1,17 @@
-const router = require("express").Router();
-const { authenticated, me } = require("../services/auth.service");
+import * as express from "express";
+const router = express.Router();
+import { authenticated, me } from "../services/auth.service";
 
-const {
+import {
   getAllUsers,
   getUserById,
   deleteUserById,
   updateUser
-} = require("../controllers/users.controller");
+} from "../controllers/users.controller";
 
 router.get("/", authenticated, getAllUsers);
 router.get("/:id", getUserById);
 router.delete("/:id", authenticated, me, deleteUserById);
 router.put("/:id", updateUser);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/users.model");
+import jwt from "jsonwebtoken";
+import User from "../models/users.model";
 
-function authenticated(req, res, next) {
+export function authenticated(req, res, next) {
   const token = req.headers.access_token;
   if (!token) {
     return res.status(403).send("Aqui no entras sin token hulio");
@@ -13,7 +13,7 @@ function authenticated(req, res, next) {
         const email = data.email;
         User.findOne({
           email: email
-        }).then(user => {
+        }).then((user: any) => {
           if (user == null) {
             return res.status(403).send("No hay usuario hulio");
           }
@@ -29,7 +29,7 @@ function authenticated(req, res, next) {
   }
 }
 
-function me(req, res, next) {
+export function me(req, res, next) {
   const elQueQuieresBorrar = req.params.id;
   const tu = req.reboot_user.uid.toString();
 
@@ -41,8 +41,3 @@ function me(req, res, next) {
       .send("Estas loco? como vas a borrar a " + elQueQuieresBorrar);
   }
 }
-
-module.exports = {
-  authenticated: authenticated,
-  me: me
-};
