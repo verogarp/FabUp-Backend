@@ -8,32 +8,57 @@ export function getAllAds(req, res) {
 
 export function getSearchAds(req, res) {
   var ObjectId = require("mongoose").Types.ObjectId;
-  let categoryId = req.query.category && new ObjectId(req.query.category);
-  let orderBy = req.query.orderBy;
-  // TODO Search by latitude/longitude
+  let category = req.query.category && new ObjectId(req.query.category);
+
+  let lat = req.query.lat;
+  let lon = req.query.lon;
 
   let minPrice = parseInt(req.query.minPrice) || 0;
-  let maxPrice = parseInt(req.query.maxPrice) || 1000;
+  let maxPrice = parseInt(req.query.maxPrice) || 10000;
 
-  AdModel.find({
-    categoryId: categoryId, // FIXME
-    $and: [{ price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]
-  })
-    .sort(orderBy || "")
+  var query = category
+    ? AdModel.find({
+        category
+      })
+    : AdModel;
+
+  query =
+    lat && lon
+      ? query.find({
+          location: {
+            $near: {
+              $maxDistance: 1,
+              $geometry: { type: "Point", coordinates: [lat, lon] }
+            }
+          }
+        })
+      : query;
+
+  query
+    .find({
+      $and: [{ price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]
+    })
     .limit(req.query.limit ? req.query.limit : 30)
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
+// TODO Search by latitude/longitude
+
 export function getFavoritesAds(req, res) {
-  AdModel.find()
+  AdModel.find({ numLikes: { $gte: 1 } })
+    .sort("numLikes")
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
-// GET : /ads?category=moda&maxPrice=40&minPrice=10
+export function createdAt(req, res) {
+  AdModel.find()
+    .sort("createdAt")
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
 
-/// GET /ADS/ALASODAD
 export function getAdById(req, res) {
   AdModel.findById(req.params.id)
     .then(response => res.json(response))
@@ -51,6 +76,11 @@ export function updateAd(req, res) {
     new: true,
     runValidators: true
   })
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
+export function createAd(req, res) {
+  AdModel.create(req.body)
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }

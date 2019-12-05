@@ -10,8 +10,8 @@ const adSchema = new mongoose.Schema({
     required: [true, "Description is required"]
   },
   images: {
-    type: [String],
-    required: [true, "Images is required"]
+    type: [String]
+    // required: [true, "Images is required"]
   },
   price: {
     type: Number,
@@ -28,13 +28,7 @@ const adSchema = new mongoose.Schema({
       ref: "comment"
     }
   ],
-  location: {
-    type: Object
-    //latitud y longitud
-  },
-  likes: {
-    type: [String]
-  },
+  location: { type: [Number], index: "2dsphere" },
   numLikes: {
     type: Number
   },
