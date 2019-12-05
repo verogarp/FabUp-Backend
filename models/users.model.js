@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is necesary"]
   },
   birthDate: {
-    type: Date,
-    required: [true, "Birth date is necesary"]
+    type: Date
+    // required: [true, "Birth date is necesary"]
   },
   photo_url: {
     Type: String
@@ -31,11 +31,15 @@ const userSchema = new mongoose.Schema({
   description: {
     type: String
   },
+  location: {
+    type: Object
+    //latitud y longitud
+  },
   categories: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "category",
-      required: [true, "Categories is necesary"]
+      ref: "category"
+      // required: [true, "Categories is necesary"]
     }
   ],
   favoriteAds: [

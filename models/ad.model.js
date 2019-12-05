@@ -28,6 +28,10 @@ const adSchema = new mongoose.Schema({
       ref: "comment"
     }
   ],
+  location: {
+    type: Object
+    //latitud y longitud
+  },
   likes: {
     type: [String]
   },

@@ -6,11 +6,13 @@ const {
   getSearchAds,
   getAdById,
   deleteAdById,
-  updateAd
+  updateAd,
+  getFavoritesAds
 } = require("../controllers/ads.controller");
 
 router.get("/", getAllAds);
 router.get("/search", getSearchAds);
+router.get("/favorites", authenticated, me, getFavoritesAds);
 router.get("/:id", getAdById);
 router.delete("/:id", authenticated, me, deleteAdById);
 router.put("/:id", updateAd);
@@ -26,8 +28,6 @@ router.put("/:id", updateAd);
 
 // Borrar
 // router.get("/search", getByCategoryAndPrice);
-// router.get("/byLocation", getByCategoryAndPrice);
-// router.get("/byCategory", getByCategory);
 // router.get("/byCreateAt", getByCreationDate);
 
 module.exports = router;

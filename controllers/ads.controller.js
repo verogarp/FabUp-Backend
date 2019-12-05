@@ -15,20 +15,26 @@ function getAllAds(req, res) {
 }
 
 function getSearchAds(req, res) {
-  console.log("search");
   var ObjectId = require("mongoose").Types.ObjectId;
-  let category = req.query.category && new ObjectId(req.query.category);
+  let categoryId = req.query.category && new ObjectId(req.query.category);
   let orderBy = req.query.orderBy;
-  console.log(category);
+  // TODO Search by latitude/longitude
+
   let minPrice = parseInt(req.query.minPrice) || 0;
-  let maxPrice = parseInt(req.query.maxPrice) || 10000000;
+  let maxPrice = parseInt(req.query.maxPrice) || 1000;
 
   AdModel.find({
-    category: category, // FIXME
+    categoryId: categoryId, // FIXME
     $and: [{ price: { $gte: minPrice } }, { price: { $lte: maxPrice } }]
   })
     .sort(orderBy || "")
     .limit(req.query.limit ? req.query.limit : 30)
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
+
+function getFavoritesAds(req, res) {
+  AdModel.find()
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
@@ -56,6 +62,8 @@ function updateAd(req, res) {
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
+
+// TODO postAd
 
 function handleError(err, res) {
   return res.status(400).json(err);
