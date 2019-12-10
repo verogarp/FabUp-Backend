@@ -9,9 +9,9 @@ const adSchema = new mongoose.Schema({
     type: String,
     required: [true, "Description is required"]
   },
-  images: {
-    type: [String]
-    // required: [true, "Images is required"]
+  image: {
+    type: String
+    // required: [true, "Image is required"]
   },
   price: {
     type: Number,
@@ -19,8 +19,8 @@ const adSchema = new mongoose.Schema({
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "category",
-    required: [true, "Category is required"]
+    ref: "category"
+    // required: [true, "Category is required"]
   },
   comments: [
     {

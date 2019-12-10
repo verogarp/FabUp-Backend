@@ -5,12 +5,15 @@ import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import jwt from "jsonwebtoken";
+import bodyParser from "body-parser";
 const app = express();
 
 // CONFIG AND ENVIRONMENT LOADING FROM .env FILE
 import config from "./config";
 
 // MIDDLEWARES
+app.use(bodyParser.json({ limit: "10mb" })); // Increase limit so we can upload images
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" })); // Same here
 app.use(cors());
 app.use(morgan("combined"));
 app.use(express.json());
