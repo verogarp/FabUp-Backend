@@ -1,7 +1,6 @@
 import messages from "../models/messages.model";
 
 export function getSearchConversations(req, res) {
-  console.log("USER: ", req.reboot_user);
   messages
     .find({
       $or: [
@@ -12,31 +11,33 @@ export function getSearchConversations(req, res) {
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
+export function postCreateConversation(req, res) {
+  messages
+    .create({
+      userOne: req.reboot_user.email,
+      userTwo: req.body.adEmail,
+      message: []
+    })
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
 
 export function getConversationById(req, res) {
   messages
-    .find({
-      _id: req.params.id
-    })
+    .findById(req.params.id)
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
 
 export function postSendMessage(req, res) {
   messages
-    .findOneAndUpdate(
+    .update(
+      { _id: req.body.id },
       {
-        $or: [
-          { userOne: req.body.userOne, userTwo: req.body.userTwo },
-          { userOne: req.params.userTwo, userTwo: req.params.userOne }
-        ]
-      },
-      {
-        userOne: req.params.userOne,
-        userTwo: req.params.userTwo,
-        $push: { messages: req.body }
-      },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+        $push: {
+          message: { text: req.body.message, sender: req.reboot_user.email }
+        }
+      }
     )
     .then(response => res.json(response))
     .catch(err => handleError(err, res));

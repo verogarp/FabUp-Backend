@@ -14,16 +14,16 @@ export function signup(req, res) {
 
   UserModel.create(userBody)
     .then(newUser => {
+      const photo = req.body.photo;
       const userData = {
         username: req.body.user_name,
         email: req.body.user_email,
-        photo: req.body.photo,
         location: req.body.location
       };
 
       const token = jwt.sign(userData, "secret", { expiresIn: "1w" });
 
-      return res.json({ token: token, user: userData });
+      return res.json({ token: token, user: { ...userData, photo } });
     })
     .catch(err => {
       res.status(403).json({ error: err });
@@ -44,16 +44,16 @@ export function login(req, res) {
           });
         }
 
+        const photo = user.photo;
         const userData = {
           username: user.name,
           email: user.email,
-          photo: user.photo,
           location: user.location
         };
 
         const token = jwt.sign(userData, "secret", { expiresIn: "1w" });
 
-        return res.json({ token: token, user: userData });
+        return res.json({ token: token, user: { ...userData, photo } });
       });
     })
     .catch(err => handleError(err, res));
