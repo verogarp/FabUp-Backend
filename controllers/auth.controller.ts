@@ -17,11 +17,7 @@ export function signup(req, res) {
         email: req.body.user_email
       };
 
-      const token = jwt.sign(
-        userData,
-        "secret", // TODO SECRET MORE SECRET PLEASE
-        { expiresIn: "1w" }
-      );
+      const token = jwt.sign(userData, "secret", { expiresIn: "1w" });
 
       return res.json({ token: token, ...userData });
     })
