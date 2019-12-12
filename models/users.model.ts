@@ -25,14 +25,15 @@ const userSchema = new mongoose.Schema({
     type: Date
     // required: [true, "Birth date is necesary"]
   },
-  photo_url: {
-    Type: String
+  photo: {
+    type: String,
+    required: [true, "photo is necesary"]
   },
   description: {
     type: String
   },
   location: {
-    type: Object
+    type: String
     //latitud y longitud
   },
   categories: [

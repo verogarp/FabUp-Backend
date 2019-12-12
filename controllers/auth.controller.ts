@@ -7,19 +7,23 @@ export function signup(req, res) {
   const userBody = {
     name: req.body.user_name,
     email: req.body.user_email,
+    photo: req.body.photo,
+    location: req.body.location,
     password: hashedPwd
   };
 
   UserModel.create(userBody)
-    .then(() => {
+    .then(newUser => {
       const userData = {
         username: req.body.user_name,
-        email: req.body.user_email
+        email: req.body.user_email,
+        photo: req.body.photo,
+        location: req.body.location
       };
 
       const token = jwt.sign(userData, "secret", { expiresIn: "1w" });
 
-      return res.json({ token: token, ...userData });
+      return res.json({ token: token, user: userData });
     })
     .catch(err => {
       res.status(403).json({ error: err });
@@ -42,12 +46,14 @@ export function login(req, res) {
 
         const userData = {
           username: user.name,
-          email: user.email
+          email: user.email,
+          photo: user.photo,
+          location: user.location
         };
 
         const token = jwt.sign(userData, "secret", { expiresIn: "1w" });
 
-        return res.json({ token: token, ...userData });
+        return res.json({ token: token, user: userData });
       });
     })
     .catch(err => handleError(err, res));
