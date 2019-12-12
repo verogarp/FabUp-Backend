@@ -1,17 +1,19 @@
 import * as express from "express";
 const router = express.Router();
-import { authenticated, me } from "../services/auth.service";
+import { authenticated } from "../services/auth.service";
 
 import {
   getAllUsers,
   getUserById,
   deleteUserById,
-  updateUser
+  updateUser,
+  getUserByEmail
 } from "../controllers/users.controller";
 
 router.get("/", authenticated, getAllUsers);
 router.get("/:id", getUserById);
-router.delete("/:id", authenticated, me, deleteUserById);
+router.get("/byEmail/:email", getUserByEmail);
+router.delete("/:id", authenticated, deleteUserById);
 router.put("/:id", updateUser);
 
 export default router;

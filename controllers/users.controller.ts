@@ -12,6 +12,12 @@ export function getUserById(req, res) {
     .catch(err => handleError(err, res));
 }
 
+export function getUserByEmail(req, res) {
+  UserModel.findOne({ email: req.params.email })
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
+
 export function deleteUserById(req, res) {
   UserModel.remove({ _id: req.params.id })
     .then(response => res.json(response))

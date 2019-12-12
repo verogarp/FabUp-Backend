@@ -45,6 +45,8 @@ mongoose.connect(
 );
 
 // ROUTING
+
+// app.use(whiteListMiddleware);
 import apiRouter from "./routes";
 app.use("/api", apiRouter);
 

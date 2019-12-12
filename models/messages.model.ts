@@ -2,14 +2,20 @@ import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
   userOne: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user"
+    type: String,
+    required: [true, "user one email is required"]
   },
   userTwo: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user"
+    type: String,
+    required: [true, "user two email is required"]
   },
-  message: [{ type: Object }]
+  message: [
+    {
+      text: String,
+      date: Date,
+      sender: String
+    }
+  ]
 });
 
 export default mongoose.model("message", messageSchema);

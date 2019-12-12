@@ -44,13 +44,12 @@ export function login(req, res) {
           });
         }
 
-        const userData = { username: user.name, email: user.email };
+        const userData = {
+          username: user.name,
+          email: user.email
+        };
 
-        const token = jwt.sign(
-          userData,
-          "secret", // TODO SECRET MORE SECRET PLEASE
-          { expiresIn: "1w" }
-        );
+        const token = jwt.sign(userData, "secret", { expiresIn: "1w" });
 
         return res.json({ token: token, ...userData });
       });

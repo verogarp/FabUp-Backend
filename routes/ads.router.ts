@@ -1,7 +1,7 @@
 import * as express from "express";
 const router = express.Router();
 
-import { authenticated, me } from "../services/auth.service";
+import { authenticated } from "../services/auth.service";
 
 import {
   getAllAds,
@@ -11,13 +11,15 @@ import {
   updateAd,
   getFavoritesAds,
   createAd,
-  createdAt
+  createdAt,
+  getMyAds
 } from "../controllers/ads.controller";
 
 router.get("/", getAllAds);
 router.get("/search", getSearchAds);
 router.get("/favorites", authenticated, getFavoritesAds);
 router.get("/createdAt", authenticated, createdAt);
+router.get("/mine", authenticated, getMyAds);
 router.get("/:id", getAdById);
 router.delete("/:id", authenticated, deleteAdById);
 router.put("/:id", updateAd);

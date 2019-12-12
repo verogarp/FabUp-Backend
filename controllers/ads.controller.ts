@@ -43,7 +43,11 @@ export function getSearchAds(req, res) {
     .catch(err => handleError(err, res));
 }
 
-// TODO Search by latitude/longitude
+export function getMyAds(req, res) {
+  AdModel.find({ author: req.reboot_user.email })
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
 
 export function getFavoritesAds(req, res) {
   AdModel.find({ numLikes: { $gte: 1 } })
@@ -84,8 +88,6 @@ export function createAd(req, res) {
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
 }
-
-// TODO postAd
 
 function handleError(err, res) {
   return res.status(400).json(err);

@@ -10,8 +10,8 @@ const adSchema = new mongoose.Schema({
     required: [true, "Description is required"]
   },
   image: {
-    type: String
-    // required: [true, "Image is required"]
+    type: String,
+    required: [true, "Image is required"]
   },
   price: {
     type: Number,
@@ -28,9 +28,9 @@ const adSchema = new mongoose.Schema({
       ref: "comment"
     }
   ],
-  location: { type: [Number], index: "2dsphere" },
-  numLikes: {
-    type: Number
+  location: {
+    type: String,
+    required: [true, "Description is required"]
   },
   createdAt: {
     type: Date,
@@ -39,6 +39,10 @@ const adSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now() // Get a timestamp :)
+  },
+  author: {
+    type: String,
+    required: [true, "Author email is required"]
   }
 });
 

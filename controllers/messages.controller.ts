@@ -1,9 +1,22 @@
 import messages from "../models/messages.model";
 
 export function getSearchConversations(req, res) {
+  console.log("USER: ", req.reboot_user);
   messages
     .find({
-      $or: [{ userOne: req.params.user }, { userTwo: req.params.user }]
+      $or: [
+        { userOne: req.reboot_user.email },
+        { userTwo: req.reboot_user.email }
+      ]
+    })
+    .then(response => res.json(response))
+    .catch(err => handleError(err, res));
+}
+
+export function getConversationById(req, res) {
+  messages
+    .find({
+      _id: req.params.id
     })
     .then(response => res.json(response))
     .catch(err => handleError(err, res));
